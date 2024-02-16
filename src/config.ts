@@ -14,3 +14,5 @@ export const config = {
     app: parsedConfig?.ARI_APP_NAME != null ? parsedConfig.ARI_APP_NAME : 'callout'
   }
 };
+
+export const ariUrl = `${config.ari.protocol}://${config.ari.host}:${config.ari.port}`;
