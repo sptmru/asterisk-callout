@@ -20,7 +20,7 @@ const dataSource = new DataSource({
 const dataSourceInitializer = async dataSource => {
   try {
     await dataSource.initialize();
-    logger.debug(`Data source initialized successfully`);
+    logger.info(`Data source initialized successfully`);
   } catch (err) {
     logger.error(`Failed to initialize data source: ${err}`);
     throw err;
