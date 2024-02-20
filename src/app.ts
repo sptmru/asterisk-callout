@@ -10,6 +10,7 @@ import { Client } from 'ari-client';
 import { PhoneNumberWithSound } from './types/ListOfNumbers';
 import { playbackCalloutOptions } from './routes/calls/playback-callout';
 import { playbackCalloutBody } from './types/PlaybackCalloutBody';
+import { StasisAppsService } from './services/StasisAppsService';
 
 const fastify = Fastify({
   logger: false
@@ -17,7 +18,7 @@ const fastify = Fastify({
 
 (async () => {
   const stasisHandler = async (client: Client): Promise<void> => {
-    await client.start(config.ari.app);
+    await StasisAppsService.startStasisApp(client, config.ari.app);
 
     const ariData = {
       client,
