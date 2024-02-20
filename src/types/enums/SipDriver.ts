@@ -1,4 +1,4 @@
-export enum SipDriver {
+export enum SipDriverEnum {
   SIP = 'SIP',
   PJSIP = 'PJSIP'
 }

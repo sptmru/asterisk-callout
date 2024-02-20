@@ -1,12 +1,12 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { SipDriver } from '../types/enums/SipDriver';
+import { SipDriverEnum } from '../types/enums/SipDriver';
 
 @Entity('extension')
 export class Extension {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column({ type: 'enum', enum: SipDriver, default: SipDriver.PJSIP })
+  @Column({ type: 'enum', enum: SipDriverEnum, default: SipDriverEnum.PJSIP })
   sip_driver: string;
 
   @Column('varchar', { length: 10, nullable: false })
