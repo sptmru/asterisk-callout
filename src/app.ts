@@ -12,6 +12,8 @@ import { playbackCalloutOptions } from './routes/calls/playback-callout';
 import { playbackCalloutBody } from './types/PlaybackCalloutBody';
 import { StasisAppsService } from './services/StasisAppsService';
 import { dataSource, dataSourceInitializer } from './data-source';
+import { swaggerOptions } from './routes/swagger/swagger';
+import { swaggerUiOptions } from './routes/swagger/swagger-ui';
 
 const fastify = Fastify({
   logger: false
@@ -29,49 +31,8 @@ const fastify = Fastify({
       channel: client.Channel()
     };
 
-    fastify.register(fastifySwagger, {
-      openapi: {
-        info: {
-          title: 'Asterisk Callout API',
-          description: 'Asterisk Callout API Documentation',
-          version: '1.0.0'
-        },
-        servers: [
-          {
-            url: config.httpHostname
-          }
-        ],
-        components: {},
-        tags: [
-          {
-            name: 'Root',
-            description: 'Root endpoints'
-          }
-        ]
-      }
-    });
-
-    fastify.register(fastifySwaggerUi, {
-      routePrefix: '/docs',
-      uiConfig: {
-        docExpansion: 'full',
-        deepLinking: false
-      },
-      uiHooks: {
-        onRequest: function (_request, _reply, next) {
-          next();
-        },
-        preHandler: function (_request, _reply, next) {
-          next();
-        }
-      },
-      staticCSP: true,
-      transformStaticCSP: header => header,
-      transformSpecification: swaggerObject => {
-        return swaggerObject;
-      },
-      transformSpecificationClone: true
-    });
+    fastify.register(fastifySwagger, swaggerOptions);
+    fastify.register(fastifySwaggerUi, swaggerUiOptions);
 
     fastify.register((app, _options, done) => {
       app.post<{ Body: playbackCalloutBody }>(
