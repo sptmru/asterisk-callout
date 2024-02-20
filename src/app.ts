@@ -11,12 +11,15 @@ import { PhoneNumberWithSound } from './types/ListOfNumbers';
 import { playbackCalloutOptions } from './routes/calls/playback-callout';
 import { playbackCalloutBody } from './types/PlaybackCalloutBody';
 import { StasisAppsService } from './services/StasisAppsService';
+import { dataSource, dataSourceInitializer } from './data-source';
 
 const fastify = Fastify({
   logger: false
 });
 
 (async () => {
+  await dataSourceInitializer(dataSource);
+
   const stasisHandler = async (client: Client): Promise<void> => {
     await StasisAppsService.startStasisApp(client, config.ari.app);
 
