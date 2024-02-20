@@ -7,6 +7,8 @@ export const swaggerOptions = {
       description: 'Asterisk Callout API Documentation',
       version: '1.0.0'
     },
+    consumes: ['application/json'],
+    produces: ['application/json'],
     servers: [
       {
         url: config.httpHostname
@@ -15,8 +17,12 @@ export const swaggerOptions = {
     components: {},
     tags: [
       {
-        name: 'Root',
-        description: 'Root endpoints'
+        name: 'calls',
+        description: 'Calls endpoints'
+      },
+      {
+        name: 'monitoring',
+        description: 'Monitoring endpoints'
       }
     ]
   }
