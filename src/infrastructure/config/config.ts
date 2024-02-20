@@ -4,8 +4,10 @@ const parsedConfig = dotenv.config().parsed;
 
 export const config = {
   logLevel: parsedConfig?.LOG_LEVEL != null ? parsedConfig.LOG_LEVEL : 'debug',
-  httpPort: parsedConfig?.HTTP_PORT != null ? Number(parsedConfig.HTTP_PORT) : 3000,
-  httpHostname: parsedConfig?.HTTP_HOSTNAME != null ? parsedConfig.HTTP_HOSTNAME : 'http://localhost',
+  api: {
+    port: parsedConfig?.HTTP_PORT != null ? Number(parsedConfig.HTTP_PORT) : 3000,
+    hostname: parsedConfig?.HTTP_HOSTNAME != null ? parsedConfig.HTTP_HOSTNAME : 'http://localhost'
+  },
   ari: {
     host: parsedConfig?.ARI_HOST != null ? parsedConfig.ARI_HOST : 'localhost',
     protocol: parsedConfig?.ARI_PROTOCOL != null ? parsedConfig.ARI_PROTOCOL : 'http',

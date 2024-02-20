@@ -1,4 +1,4 @@
-import { config } from '../../config';
+import { config } from '../../infrastructure/config/config';
 
 export const swaggerOptions = {
   openapi: {
@@ -11,7 +11,7 @@ export const swaggerOptions = {
     produces: ['application/json'],
     servers: [
       {
-        url: config.httpHostname
+        url: config.api.hostname
       }
     ],
     components: {},

@@ -6,10 +6,10 @@
   "scripts": {
     "start": "ts-node --swc src/app.ts",
     "typeorm": "ts-node ./node_modules/typeorm/cli",
-    "migrations:generate": "npm run typeorm -- migration:generate -d ./src/data-source.ts",
-    "migrations:create": "npm run typeorm -- migration:create -d ./src/data-source.ts",
-    "migrations:run": "npm run typeorm migration:run -- -d ./src/data-source.ts",
-    "migrations:revert": "npm run typeorm migration:revert -- -d ./src/data-source.ts",
+    "migrations:generate": "npm run typeorm -- migration:generate -d src/infrastructure/database/data-source.ts",
+    "migrations:create": "npm run typeorm -- migration:create -d src/infrastructure/database/data-source.ts",
+    "migrations:run": "npm run typeorm migration:run -- -d src/infrastructure/database/data-source.ts",
+    "migrations:revert": "npm run typeorm migration:revert -- -d src/infrastructure/database/data-source.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint --fix --ext .ts",
     "format": "prettier --write \"**/*.{js,ts}\""

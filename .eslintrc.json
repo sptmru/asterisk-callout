@@ -10,13 +10,9 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "@typescript-eslint/strict-boolean-expressions": [
-      2,
-      {
-        "allowString" : false,
-        "allowNumber" : false
-      }
-    ]
+    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/strict-boolean-expressions": 0
   },
   "ignorePatterns": ["build/*"]
 }

@@ -1,6 +1,6 @@
-export const playbackCalloutOptions = {
+export const calloutPlaybackRouteOptions = {
   method: 'POST',
-  url: '/api/v1/calls/playback-callout',
+  url: '/api/v1/callout/playback',
   schema: {
     description:
       'Accepts a list of phone numbers and initiates a callout by this list. Once answered, plays a message and hangs up.',

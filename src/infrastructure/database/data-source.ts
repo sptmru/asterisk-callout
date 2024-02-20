@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 
-import { config } from './config';
-import { logger } from './misc/Logger';
+import { config } from '../config/config';
+import { logger } from '../../misc/Logger';
 
 const dataSource = new DataSource({
   type: 'postgres',
