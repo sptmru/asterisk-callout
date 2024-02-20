@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { SipDriver } from '../types/SipDriver';
+import { SipDriver } from '../types/enums/SipDriver';
 
 @Entity('extension')
 export class Extension {
