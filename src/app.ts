@@ -1,11 +1,13 @@
 import * as ari from 'ari-client';
 import { Client } from 'ari-client';
 
-import { config, ariUrl } from './config';
+import { config, ariUrl } from './infrastructure/config/config';
 import { logger } from './misc/Logger';
 import { StasisAppsService } from './services/StasisAppsService';
-import { dataSource, dataSourceInitializer } from './data-source';
-import { api } from './routes';
+import { dataSource, dataSourceInitializer } from './infrastructure/database/data-source';
+import { Api } from './infrastructure/api/server';
+import { HealthRoute } from './routes/health/health.route';
+import { CalloutRoute } from './routes/callout/callout.route';
 
 (async () => {
   await dataSourceInitializer(dataSource);
@@ -20,7 +22,11 @@ import { api } from './routes';
       channel: client.Channel()
     };
 
-    api.start(config.httpPort);
+    const api = new Api({
+      plugins: [],
+      routes: [HealthRoute, CalloutRoute]
+    });
+    api.listen();
   };
 
   ari

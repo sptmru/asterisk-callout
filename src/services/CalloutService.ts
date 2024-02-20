@@ -1,6 +1,6 @@
-import { AriData } from '../types/AriData';
+import { AriData } from '../domain/types/aridata.type';
 import { logger } from '../misc/Logger';
-import { PhoneNumberWithSound } from '../types/ListOfNumbers';
+import { PhoneNumberWithSound } from '../domain/types/phonenumberwithsound.type';
 import { Channel, LiveRecording, Playback } from 'ari-client';
 
 export class CalloutService {

@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { ExtensionStatusEnum } from '../types/enums/ExtensionStatus';
+import { ExtensionStatusEnum } from '../enums/extensionstatus.enum';
 
 @Entity('extension_status')
-export class ExtensionStatus {
+export class ExtensionstatusEntity {
   @PrimaryGeneratedColumn()
   id?: number;
 
