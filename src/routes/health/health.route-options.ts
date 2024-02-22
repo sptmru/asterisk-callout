@@ -12,7 +12,7 @@ export const healthGetRouteOptions: RouteOptionsWithoutHandler = {
         description: 'Successful response',
         type: 'object',
         properties: {
-          status: { type: 'string' }
+          message: { type: 'string' }
         }
       }
     }
