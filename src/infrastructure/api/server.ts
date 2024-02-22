@@ -14,7 +14,7 @@ export class Api {
 
   public basePrefix: string = '/api/v1';
 
-  constructor(appInit: { plugins: any; routes: any }) {
+  constructor(appInit: { plugins: any; routes: any; definitions: any }) {
     this.app = Fastify({
       logger: false
     });
@@ -31,6 +31,7 @@ export class Api {
 
     this.register(appInit.plugins);
     this.routes(appInit.routes);
+    this.addDefinitions(appInit.definitions);
   }
 
   private register(plugins: { forEach: (arg0: (plugin: any) => void) => void }) {
@@ -43,6 +44,12 @@ export class Api {
     routes.forEach(route => {
       const router = new route();
       this.app.register(router.routes, { prefix: `${this.basePrefix}${router.prefix}` });
+    });
+  }
+
+  private addDefinitions(definitions: { forEach: (arg0: (routes: any) => void) => void }) {
+    definitions.forEach(definition => {
+      this.app.addSchema(definition);
     });
   }
 
