@@ -21,6 +21,10 @@ export const swaggerOptions = {
         description: 'Calls endpoints'
       },
       {
+        name: 'extensions',
+        description: 'PBX extensions'
+      },
+      {
         name: 'monitoring',
         description: 'Monitoring endpoints'
       }
