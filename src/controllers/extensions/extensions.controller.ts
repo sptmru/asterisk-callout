@@ -107,6 +107,10 @@ export class ExtensionsController {
       }
 
       await dataSource.manager.remove(extension);
+      if (extension.data) {
+        await dataSource.manager.remove(extension.data);
+      }
+
       return reply.code(204).send({ message: 'Extension deleted successfully' });
     } catch (err) {
       logger.error(`Error while deleting an extension: ${err}`);

@@ -5,7 +5,6 @@ import { ExtensionStatusEnum } from '../enums/extensionstatus.enum';
 import { dataSource } from '../../infrastructure/database/data-source';
 
 @Entity('extension')
-@Index(['extension_number'], { unique: true })
 export class Extension {
   @PrimaryGeneratedColumn()
   id?: number;
@@ -13,10 +12,11 @@ export class Extension {
   @Column({ type: 'enum', enum: SipDriverEnum, default: SipDriverEnum.PJSIP })
   sip_driver: string;
 
+  @Index(['extension_number'], { unique: true })
   @Column('varchar', { length: 10, nullable: false })
   extension_number: string;
 
-  @OneToOne(() => ExtensionStatus, { cascade: true })
+  @OneToOne(() => ExtensionStatus, { eager: true, cascade: true, onDelete: 'CASCADE' })
   @JoinColumn()
   data: ExtensionStatus;
 
