@@ -1,9 +1,9 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { SipDriverEnum } from '../enums/sipdriver.enum';
-import { ExtensionstatusEntity } from './extensionstatus.entity';
+import { ExtensionStatus } from './extensionstatus.entity';
 
 @Entity('extension')
-export class ExtensionEntity {
+export class Extension {
   @PrimaryGeneratedColumn()
   id?: number;
 
@@ -13,7 +13,7 @@ export class ExtensionEntity {
   @Column('varchar', { length: 10, nullable: false })
   extension_number: string;
 
-  @OneToOne(() => ExtensionstatusEntity)
+  @OneToOne(() => ExtensionStatus)
   @JoinColumn()
-  status: ExtensionstatusEntity;
+  data: ExtensionStatus;
 }
