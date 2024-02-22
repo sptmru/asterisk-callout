@@ -1,4 +1,6 @@
-export const calloutPlaybackRouteOptions = {
+import { RouteOptionsWithoutHandler } from '../../infrastructure/api/types/RouteOptionsWithoutHandler';
+
+export const calloutPlaybackRouteOptions: RouteOptionsWithoutHandler = {
   method: 'POST',
   url: '/api/v1/callout/playback',
   schema: {
