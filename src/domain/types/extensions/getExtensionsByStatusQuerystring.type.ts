@@ -1,5 +1,5 @@
-import { ExtensionStatusEnum } from '../enums/extensionstatus.enum';
+import { ExtensionStatusEnum } from '../../enums/extensionstatus.enum';
 
-export type getExtensionsByStatusParams = {
+export type GetExtensionsByStatusParams = {
   status: ExtensionStatusEnum;
 };

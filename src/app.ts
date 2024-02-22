@@ -10,6 +10,7 @@ import { HealthRoute } from './routes/health/health.route';
 import { CalloutRoute } from './routes/callout/callout.route';
 import { ExtensionDefinition } from './domain/definitions/extension.definition';
 import { ExtensionsRoute } from './routes/extensions/extensions.route';
+import { ExtensionStatusDefinition } from './domain/definitions/extensionStatus.definition';
 
 (async () => {
   await dataSourceInitializer(dataSource);
@@ -27,7 +28,7 @@ import { ExtensionsRoute } from './routes/extensions/extensions.route';
     const api = new Api({
       plugins: [],
       routes: [HealthRoute, CalloutRoute, ExtensionsRoute],
-      definitions: [ExtensionDefinition]
+      definitions: [ExtensionDefinition, ExtensionStatusDefinition]
     });
     api.listen();
   };

@@ -1,9 +1,11 @@
 import { RouteOptionsWithoutHandler } from '../../infrastructure/api/types/RouteOptionsWithoutHandler';
 import { ExtensionStatusEnum } from '../../domain/enums/extensionstatus.enum';
 
+const baseUrl = '/api/v1/extensions';
+
 export const getExtensionsByStatusOptions: RouteOptionsWithoutHandler = {
-  method: 'get',
-  url: '/api/v1/extensions/:status',
+  method: 'GET',
+  url: `${baseUrl}/:status`,
   schema: {
     description: 'Accepts a status in the URL and looks for extensions with this status in the DB',
     summary: 'Get extensions with given status',
@@ -17,9 +19,43 @@ export const getExtensionsByStatusOptions: RouteOptionsWithoutHandler = {
     response: {
       200: {
         description: 'Successful response',
+        type: 'array',
+        items: { $ref: 'Extension#' }
+      },
+      500: {
+        description: 'Error response',
         type: 'object',
         properties: {
-          extensions: { type: 'array', items: { $ref: 'Extension#' } }
+          error: { type: 'string' }
+        }
+      }
+    }
+  }
+};
+
+export const createExtensionOptions: RouteOptionsWithoutHandler = {
+  method: 'POST',
+  url: `${baseUrl}`,
+  schema: {
+    description: 'Accepts sip_driver (PJSIP/SIP) with an extension number and returns created extension',
+    summary: 'Create extension',
+    tags: ['extensions'],
+    body: {
+      type: 'object',
+      required: ['sip_driver', 'extension_number'],
+      properties: {
+        sip_driver: { type: 'string' },
+        extension_number: { type: 'string' }
+      }
+    },
+    response: {
+      201: {
+        description: 'Extension successfully created',
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          sip_driver: { type: 'string' },
+          extension_number: { type: 'string' }
         }
       },
       500: {

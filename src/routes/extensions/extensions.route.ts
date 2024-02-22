@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
-import { getExtensionsByStatusOptions } from './extensions.route-options';
+import { createExtensionOptions, getExtensionsByStatusOptions } from './extensions.route-options';
 import { ExtensionsController } from '../../controllers/extensions/extensions.controller';
 
 export class ExtensionsRoute {
@@ -7,5 +7,6 @@ export class ExtensionsRoute {
 
   async routes(fastify: FastifyInstance, _options: FastifyPluginOptions): Promise<void> {
     fastify.get('/:status', getExtensionsByStatusOptions, ExtensionsController.getExtensionsByStatus);
+    fastify.post('', createExtensionOptions, ExtensionsController.createExtension);
   }
 }
