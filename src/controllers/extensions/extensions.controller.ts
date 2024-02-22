@@ -5,6 +5,8 @@ import { logger } from '../../misc/Logger';
 import { CreateExtensionBody } from '../../domain/types/extensions/createExtensionBody.type';
 import { Extension } from '../../domain/entities/extension.entity';
 import { dataSource } from '../../infrastructure/database/data-source';
+import { UpdateExtensionBody } from '../../domain/types/extensions/updateExtensionBody.type';
+import { UpdateExtensionParams } from '../../domain/types/extensions/updateExtensionParams.type';
 
 export class ExtensionsController {
   static async getExtensionsByStatus(
@@ -36,6 +38,31 @@ export class ExtensionsController {
     } catch (err) {
       logger.error(`Error while creating an extension: ${err}`);
       return reply.code(500).send({ error: 'Internal server error' });
+    }
+  }
+
+  static async updateExtension(
+    request: FastifyRequest<{ Body: UpdateExtensionBody; Params: UpdateExtensionParams }>,
+    reply: FastifyReply
+  ): Promise<FastifyReply> {
+    try {
+      const { extension_number } = request.params;
+      let extension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
+      if (extension === null) {
+        return reply.code(404).send({ error: 'Extension not found' });
+      }
+      if (request.body?.sip_driver) {
+        extension.sip_driver = request.body.sip_driver;
+      }
+      if (request.body?.extension_number) {
+        extension.sip_driver = request.body.extension_number;
+      }
+
+      extension = await dataSource.manager.save(extension);
+      return reply.code(200).send(extension);
+    } catch (err) {
+      logger.error(`Error while updating a controller: ${err}`);
+      return reply.code(500).send('Internal server error');
     }
   }
 }
