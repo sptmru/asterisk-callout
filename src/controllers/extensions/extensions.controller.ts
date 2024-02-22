@@ -9,6 +9,16 @@ import { UpdateExtensionBody } from '../../domain/types/extensions/updateExtensi
 import { DeleteExtensionParams, UpdateExtensionParams } from '../../domain/types/extensions/updateExtensionParams.type';
 
 export class ExtensionsController {
+  static async getAllExtensions(_request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+    try {
+      const extensions = await ExtensionsService.getExtensions();
+      return reply.code(200).send(extensions);
+    } catch (err) {
+      logger.error(`Error while getting all extensions ${err}`);
+      return reply.code(500).send({ error: 'Internal server error' });
+    }
+  }
+
   static async getExtensionsByStatus(
     request: FastifyRequest<{ Params: GetExtensionsByStatusParams }>,
     reply: FastifyReply

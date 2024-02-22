@@ -4,6 +4,30 @@ import { SipDriverEnum } from '../../domain/enums/sipdriver.enum';
 
 const baseUrl = '/api/v1/extensions';
 
+export const getAllExtensions: RouteOptionsWithoutHandler = {
+  method: 'GET',
+  url: `${baseUrl}`,
+  schema: {
+    description: 'Gets all extensions from the DB',
+    summary: 'Get all extensions',
+    tags: ['extensions'],
+    response: {
+      200: {
+        description: 'Successful response',
+        type: 'array',
+        items: { $ref: 'Extension#' }
+      },
+      500: {
+        description: 'Error response',
+        type: 'object',
+        properties: {
+          error: { type: 'string' }
+        }
+      }
+    }
+  }
+};
+
 export const getExtensionsByStatusOptions: RouteOptionsWithoutHandler = {
   method: 'GET',
   url: `${baseUrl}/:status`,
