@@ -1,11 +1,11 @@
-import { BeforeInsert, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { SipDriverEnum } from '../enums/sipdriver.enum';
 import { ExtensionStatus } from './extensionstatus.entity';
-import { logger } from '../../misc/Logger';
 import { ExtensionStatusEnum } from '../enums/extensionstatus.enum';
 import { dataSource } from '../../infrastructure/database/data-source';
 
 @Entity('extension')
+@Index(['extension_number'], { unique: true })
 export class Extension {
   @PrimaryGeneratedColumn()
   id?: number;

@@ -39,6 +39,12 @@ export class ExtensionsController {
   ): Promise<FastifyReply> {
     try {
       const { sip_driver, extension_number } = request.body;
+
+      const existingExtension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
+      if (existingExtension !== null) {
+        return reply.code(400).send({ error: `Extension ${extension_number} already exists` });
+      }
+
       const extensionData = new Extension();
       extensionData.sip_driver = sip_driver;
       extensionData.extension_number = extension_number;
@@ -64,8 +70,21 @@ export class ExtensionsController {
       if (request.body?.sip_driver) {
         extension.sip_driver = request.body.sip_driver;
       }
+
       if (request.body?.extension_number) {
-        extension.sip_driver = request.body.extension_number;
+        const extension_number = request.body.extension_number;
+        const existingExtension = await dataSource
+          .getRepository(Extension)
+          .createQueryBuilder('extension')
+          .where('extension.extension_number = :extension_number', { extension_number })
+          .andWhere('extension.id != :currentId', { currentId: extension.id })
+          .getOne();
+
+        if (existingExtension !== null) {
+          return reply.code(400).send({ error: `Extension ${extension_number} already exists` });
+        }
+
+        extension.extension_number = extension_number;
       }
 
       extension = await dataSource.manager.save(extension);
