@@ -3,6 +3,7 @@ import {
   createExtensionOptions,
   deleteExtensionOptions,
   getAllExtensions,
+  getExtension,
   getExtensionsByStatusOptions,
   updateExtensionOptions
 } from './extensions.route-options';
@@ -13,7 +14,8 @@ export class ExtensionsRoute {
 
   async routes(fastify: FastifyInstance, _options: FastifyPluginOptions): Promise<void> {
     fastify.get('', getAllExtensions, ExtensionsController.getAllExtensions);
-    fastify.get('/:status', getExtensionsByStatusOptions, ExtensionsController.getExtensionsByStatus);
+    fastify.get('/:extension_number', getExtension, ExtensionsController.getExtension);
+    fastify.get('/filter/:status', getExtensionsByStatusOptions, ExtensionsController.getExtensionsByStatus);
     fastify.post('', createExtensionOptions, ExtensionsController.createExtension);
     fastify.put('/:extension_number', updateExtensionOptions, ExtensionsController.updateExtension);
     fastify.delete('/:extension_number', deleteExtensionOptions, ExtensionsController.deleteExtension);

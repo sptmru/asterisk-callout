@@ -3,3 +3,4 @@ export type UpdateExtensionParams = {
 };
 
 export type DeleteExtensionParams = UpdateExtensionParams;
+export type GetExtensionParams = UpdateExtensionParams;

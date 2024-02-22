@@ -6,13 +6,35 @@ import { CreateExtensionBody } from '../../domain/types/extensions/createExtensi
 import { Extension } from '../../domain/entities/extension.entity';
 import { dataSource } from '../../infrastructure/database/data-source';
 import { UpdateExtensionBody } from '../../domain/types/extensions/updateExtensionBody.type';
-import { DeleteExtensionParams, UpdateExtensionParams } from '../../domain/types/extensions/updateExtensionParams.type';
+import {
+  DeleteExtensionParams,
+  GetExtensionParams,
+  UpdateExtensionParams
+} from '../../domain/types/extensions/updateExtensionParams.type';
 
 export class ExtensionsController {
   static async getAllExtensions(_request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
     try {
       const extensions = await ExtensionsService.getExtensions();
       return reply.code(200).send(extensions);
+    } catch (err) {
+      logger.error(`Error while getting all extensions ${err}`);
+      return reply.code(500).send({ error: 'Internal server error' });
+    }
+  }
+
+  static async getExtension(
+    request: FastifyRequest<{ Params: GetExtensionParams }>,
+    reply: FastifyReply
+  ): Promise<FastifyReply> {
+    try {
+      const { extension_number } = request.params;
+      const extension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
+      if (extension === null) {
+        return reply.code(404).send({ error: `Extension ${extension_number} not found` });
+      }
+
+      return reply.code(200).send(extension);
     } catch (err) {
       logger.error(`Error while getting all extensions ${err}`);
       return reply.code(500).send({ error: 'Internal server error' });

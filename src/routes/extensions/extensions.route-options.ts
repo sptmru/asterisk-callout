@@ -28,9 +28,44 @@ export const getAllExtensions: RouteOptionsWithoutHandler = {
   }
 };
 
+export const getExtension: RouteOptionsWithoutHandler = {
+  method: 'GET',
+  url: `${baseUrl}/:extension_number`,
+  schema: {
+    description: 'Gets an extension by extension_number from the DB',
+    summary: 'Get one extension',
+    tags: ['extensions'],
+    response: {
+      200: {
+        description: 'Successful response',
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          sip_driver: { type: 'string', enum: Object.values(SipDriverEnum) },
+          extension_number: { type: 'string' }
+        }
+      },
+      404: {
+        description: 'Extension not found',
+        type: 'object',
+        properties: {
+          error: { type: 'string' }
+        }
+      },
+      500: {
+        description: 'Error response',
+        type: 'object',
+        properties: {
+          error: { type: 'string' }
+        }
+      }
+    }
+  }
+};
+
 export const getExtensionsByStatusOptions: RouteOptionsWithoutHandler = {
   method: 'GET',
-  url: `${baseUrl}/:status`,
+  url: `${baseUrl}/filter/:status`,
   schema: {
     description: 'Accepts a status in the URL and looks for extensions with this status in the DB',
     summary: 'Get extensions with given status',
@@ -125,6 +160,13 @@ export const updateExtensionOptions: RouteOptionsWithoutHandler = {
           extension_number: { type: 'string' }
         }
       },
+      404: {
+        description: 'Extension not found',
+        type: 'object',
+        properties: {
+          error: { type: 'string' }
+        }
+      },
       500: {
         description: 'Error response',
         type: 'object',
@@ -155,6 +197,13 @@ export const deleteExtensionOptions: RouteOptionsWithoutHandler = {
         type: 'object',
         properties: {
           message: { type: 'string' }
+        }
+      },
+      404: {
+        description: 'Extension not found',
+        type: 'object',
+        properties: {
+          error: { type: 'string' }
         }
       },
       500: {
