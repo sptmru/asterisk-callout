@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import {
   createExtensionOptions,
+  deleteExtensionOptions,
   getExtensionsByStatusOptions,
   updateExtensionOptions
 } from './extensions.route-options';
@@ -13,5 +14,6 @@ export class ExtensionsRoute {
     fastify.get('/:status', getExtensionsByStatusOptions, ExtensionsController.getExtensionsByStatus);
     fastify.post('', createExtensionOptions, ExtensionsController.createExtension);
     fastify.put('/:extension_number', updateExtensionOptions, ExtensionsController.updateExtension);
+    fastify.delete('/:extension_number', deleteExtensionOptions, ExtensionsController.deleteExtension);
   }
 }

@@ -85,14 +85,52 @@ export const updateExtensionOptions: RouteOptionsWithoutHandler = {
         extension_number: { type: 'string' }
       }
     },
+    params: {
+      type: 'object',
+      properties: {
+        extension_number: { type: 'string' }
+      }
+    },
     response: {
-      201: {
-        description: 'Extension successfully created',
+      200: {
+        description: 'Extension successfully updated',
         type: 'object',
         properties: {
           id: { type: 'string' },
           sip_driver: { type: 'string', enum: Object.values(SipDriverEnum) },
           extension_number: { type: 'string' }
+        }
+      },
+      500: {
+        description: 'Error response',
+        type: 'object',
+        properties: {
+          error: { type: 'string' }
+        }
+      }
+    }
+  }
+};
+
+export const deleteExtensionOptions: RouteOptionsWithoutHandler = {
+  method: 'DELETE',
+  url: `${baseUrl}/:extension_number`,
+  schema: {
+    description: 'Delete extension by extension number',
+    summary: 'Delete extension',
+    tags: ['extensions'],
+    params: {
+      type: 'object',
+      properties: {
+        extension_number: { type: 'string' }
+      }
+    },
+    response: {
+      204: {
+        description: 'Extension successfully deleted',
+        type: 'object',
+        properties: {
+          message: { type: 'string' }
         }
       },
       500: {

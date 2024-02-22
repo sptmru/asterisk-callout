@@ -6,7 +6,7 @@ import { CreateExtensionBody } from '../../domain/types/extensions/createExtensi
 import { Extension } from '../../domain/entities/extension.entity';
 import { dataSource } from '../../infrastructure/database/data-source';
 import { UpdateExtensionBody } from '../../domain/types/extensions/updateExtensionBody.type';
-import { UpdateExtensionParams } from '../../domain/types/extensions/updateExtensionParams.type';
+import { DeleteExtensionParams, UpdateExtensionParams } from '../../domain/types/extensions/updateExtensionParams.type';
 
 export class ExtensionsController {
   static async getExtensionsByStatus(
@@ -49,7 +49,7 @@ export class ExtensionsController {
       const { extension_number } = request.params;
       let extension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
       if (extension === null) {
-        return reply.code(404).send({ error: 'Extension not found' });
+        return reply.code(404).send({ error: `Extension ${extension_number} not found` });
       }
       if (request.body?.sip_driver) {
         extension.sip_driver = request.body.sip_driver;
@@ -62,6 +62,25 @@ export class ExtensionsController {
       return reply.code(200).send(extension);
     } catch (err) {
       logger.error(`Error while updating a controller: ${err}`);
+      return reply.code(500).send('Internal server error');
+    }
+  }
+
+  static async deleteExtension(
+    request: FastifyRequest<{ Params: DeleteExtensionParams }>,
+    reply: FastifyReply
+  ): Promise<FastifyReply> {
+    try {
+      const { extension_number } = request.params;
+      const extension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
+      if (extension === null) {
+        return reply.code(404).send({ error: `Extension ${extension_number} not found` });
+      }
+
+      await dataSource.manager.remove(extension);
+      return reply.code(204).send({ message: 'Extension deleted successfully' });
+    } catch (err) {
+      logger.error(`Error while deleting an extension: ${err}`);
       return reply.code(500).send('Internal server error');
     }
   }
