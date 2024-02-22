@@ -8,6 +8,7 @@ import { dataSource, dataSourceInitializer } from './infrastructure/database/dat
 import { Api } from './infrastructure/api/server';
 import { HealthRoute } from './routes/health/health.route';
 import { CalloutRoute } from './routes/callout/callout.route';
+import { ExtensionDefinition } from './domain/definitions/extension.definition';
 
 (async () => {
   await dataSourceInitializer(dataSource);
@@ -24,7 +25,8 @@ import { CalloutRoute } from './routes/callout/callout.route';
 
     const api = new Api({
       plugins: [],
-      routes: [HealthRoute, CalloutRoute]
+      routes: [HealthRoute, CalloutRoute],
+      definitions: [ExtensionDefinition]
     });
     api.listen();
   };
