@@ -23,7 +23,7 @@ export class Extension {
   @BeforeInsert()
   async createExtensionStatus() {
     let status = new ExtensionStatus();
-    status.state = ExtensionStatusEnum.BUSY;
+    status.state = ExtensionStatusEnum.UNAVAILABLE;
 
     status = await dataSource.manager.save(status);
     this.data = status;

@@ -6,6 +6,6 @@ export class ExtensionStatus {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column({ type: 'enum', enum: ExtensionStatusEnum, default: ExtensionStatusEnum.AVAILABLE })
+  @Column({ type: 'enum', enum: ExtensionStatusEnum, default: ExtensionStatusEnum.UNAVAILABLE })
   state: string;
 }
