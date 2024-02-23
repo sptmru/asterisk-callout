@@ -5,7 +5,7 @@ import { HealthController } from '../../controllers/health/health.controller';
 export class HealthRoute {
   public prefix = '/health';
 
-  async routes(fastify: FastifyInstance) {
+  routes(fastify: FastifyInstance): void {
     fastify.get('', healthGetRouteOptions, HealthController.healthcheck);
   }
 }

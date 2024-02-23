@@ -13,7 +13,7 @@ import { ExtensionsController } from '../../controllers/extensions/extensions.co
 export class ExtensionsRoute {
   public prefix: string = '/extensions';
 
-  async routes(fastify: FastifyInstance): Promise<void> {
+  routes(fastify: FastifyInstance): void {
     fastify.get('', getAllExtensions, ExtensionsController.getAllExtensions);
     fastify.get('/:extension_number', getExtension, ExtensionsController.getExtension);
     fastify.get('/filter/:status', getExtensionsByStatusOptions, ExtensionsController.getExtensionsByStatus);
