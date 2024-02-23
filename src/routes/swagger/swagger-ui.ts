@@ -1,7 +1,7 @@
 import { FastifySwaggerUiOptions } from '@fastify/swagger-ui';
 
 export const swaggerUiOptions: FastifySwaggerUiOptions = {
-  routePrefix: '/docs',
+  routePrefix: '/api/docs',
   uiConfig: {
     docExpansion: 'full',
     deepLinking: false
