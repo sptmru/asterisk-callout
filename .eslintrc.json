@@ -16,6 +16,21 @@
     "@typescript-eslint/no-unnecessary-condition": 2,
     "@typescript-eslint/no-floating-promises": 2,
     "@typescript-eslint/explicit-function-return-type": 2,
+    "@typescript-eslint/naming-convention": [
+      2,
+      {
+        "selector": "variable",
+        "format": ["camelCase", "PascalCase", "UPPER_CASE"]
+      },
+      {
+        "selector": "function",
+        "format": ["camelCase", "PascalCase"]
+      },
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      }
+    ],
     "arrow-body-style": [2, "as-needed"],
     "no-nested-ternary": 2,
     "max-params": [2, 3],

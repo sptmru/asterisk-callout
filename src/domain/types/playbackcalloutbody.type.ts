@@ -1,3 +1,3 @@
-export type playbackCalloutBody = {
+export type PlaybackCalloutBody = {
   numbers: string[];
 };

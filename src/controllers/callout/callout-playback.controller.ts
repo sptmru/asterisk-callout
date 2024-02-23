@@ -2,11 +2,11 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { PhoneNumberWithSound } from '../../domain/types/phonenumberwithsound.type';
 import { CalloutService } from '../../services/callout.service';
 import { logger } from '../../misc/Logger';
-import { playbackCalloutBody } from '../../domain/types/playbackcalloutbody.type';
+import { PlaybackCalloutBody } from '../../domain/types/playbackcalloutbody.type';
 
 export class CalloutPlaybackController {
   static async calloutPlayback(
-    request: FastifyRequest<{ Body: playbackCalloutBody }>,
+    request: FastifyRequest<{ Body: PlaybackCalloutBody }>,
     reply: FastifyReply
   ): Promise<FastifyReply> {
     try {
