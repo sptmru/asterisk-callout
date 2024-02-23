@@ -5,6 +5,6 @@ export const ExtensionStatusDefinition = {
   type: 'object',
   required: ['state'],
   properties: {
-    state: { type: 'string', enum: Object.values(ExtensionStatusEnum) }
-  }
+    state: { type: 'string', enum: Object.values(ExtensionStatusEnum) },
+  },
 };

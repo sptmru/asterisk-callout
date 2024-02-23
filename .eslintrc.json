@@ -21,7 +21,14 @@
     "max-params": [2, 3],
     "require-await": 2,
     "no-shadow": 2,
-    "complexity": 2
+    "complexity": 2,
+    "comma-dangle": [2, {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "never",
+      "exports": "never",
+      "functions": "never"
+    }]
   },
   "ignorePatterns": ["build/*"]
 }

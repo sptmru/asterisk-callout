@@ -14,14 +14,14 @@ export class CalloutService {
       format: 'wav',
       maxDurationSeconds: 0,
       maxSilenceSeconds: 0,
-      ifExists: 'overwrite'
+      ifExists: 'overwrite',
     };
 
     const snoopChannel = await client.channels.snoopChannelWithId({
       channelId: channel.id,
       snoopId: `${channel.id}_snoop`,
       spy: 'both',
-      app: appName as string
+      app: appName as string,
     });
 
     const liveRecording = client.LiveRecording();
@@ -88,7 +88,7 @@ export class CalloutService {
       await outgoingChannel.originate({
         endpoint: `PJSIP/${phoneNumberWithSound.number}`,
         app: appName,
-        appArgs: 'dialed'
+        appArgs: 'dialed',
       });
       logger.debug(`Calling PJSIP/${phoneNumberWithSound.number} on channel ${outgoingChannel.id}`);
     } catch (err) {
@@ -139,7 +139,7 @@ export class CalloutService {
         await channel.originate({
           endpoint,
           app,
-          appArgs: 'dialed'
+          appArgs: 'dialed',
         });
 
         return channel;

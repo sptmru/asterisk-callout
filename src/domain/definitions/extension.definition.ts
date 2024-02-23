@@ -8,6 +8,6 @@ export const ExtensionDefinition = {
     id: { type: 'string' },
     sip_driver: { type: 'string', enum: Object.values(SipDriverEnum) },
     extension_number: { type: 'string' },
-    data: { $ref: 'ExtensionStatus#' }
-  }
+    data: { $ref: 'ExtensionStatus#' },
+  },
 };

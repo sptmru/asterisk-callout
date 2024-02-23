@@ -12,9 +12,9 @@ export const healthGetRouteOptions: RouteOptionsWithoutHandler = {
         description: 'Successful response',
         type: 'object',
         properties: {
-          message: { type: 'string' }
-        }
-      }
-    }
-  }
+          message: { type: 'string' },
+        },
+      },
+    },
+  },
 };

@@ -23,13 +23,13 @@ import { ExtensionStatusDefinition } from './domain/definitions/extensionStatus.
     global.ariData = {
       client,
       appName: config.ari.app,
-      channel: client.Channel()
+      channel: client.Channel(),
     };
 
     const api = new Api({
       plugins: [],
       routes: [HealthRoute, CalloutRoute, ExtensionsRoute],
-      definitions: [ExtensionDefinition, ExtensionStatusDefinition]
+      definitions: [ExtensionDefinition, ExtensionStatusDefinition],
     });
     api.listen();
   };

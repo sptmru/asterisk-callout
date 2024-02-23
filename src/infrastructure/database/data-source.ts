@@ -14,7 +14,7 @@ const dataSource = new DataSource({
   synchronize: false,
   entities: ['src/domain/entities/**/*.ts'],
   migrations: ['src/migrations/**/*.ts'],
-  subscribers: ['src/subscribers/**/*.ts']
+  subscribers: ['src/subscribers/**/*.ts'],
 });
 
 const dataSourceInitializer = async (ds: DataSource): Promise<void> => {

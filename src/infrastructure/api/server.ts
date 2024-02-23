@@ -18,7 +18,7 @@ export class Api {
 
   constructor(appInit: { plugins: any; routes: any; definitions: any }) {
     this.app = Fastify({
-      logger: false
+      logger: false,
     });
 
     this.app.addHook('preHandler', (req, _reply, done) => {

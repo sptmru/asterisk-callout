@@ -15,17 +15,17 @@ export const getAllExtensions: RouteOptionsWithoutHandler = {
       200: {
         description: 'Successful response',
         type: 'array',
-        items: { $ref: 'Extension#' }
+        items: { $ref: 'Extension#' },
       },
       500: {
         description: 'Error response',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
-      }
-    }
-  }
+          error: { type: 'string' },
+        },
+      },
+    },
+  },
 };
 
 export const getExtension: RouteOptionsWithoutHandler = {
@@ -41,18 +41,18 @@ export const getExtension: RouteOptionsWithoutHandler = {
         description: 'Extension not found',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
+          error: { type: 'string' },
+        },
       },
       500: {
         description: 'Error response',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
-      }
-    }
-  }
+          error: { type: 'string' },
+        },
+      },
+    },
+  },
 };
 
 export const getExtensionsByStatusOptions: RouteOptionsWithoutHandler = {
@@ -65,24 +65,24 @@ export const getExtensionsByStatusOptions: RouteOptionsWithoutHandler = {
     params: {
       type: 'object',
       properties: {
-        status: { type: 'string', enum: Object.values(ExtensionStatusEnum) }
-      }
+        status: { type: 'string', enum: Object.values(ExtensionStatusEnum) },
+      },
     },
     response: {
       200: {
         description: 'Successful response',
         type: 'array',
-        items: { $ref: 'Extension#' }
+        items: { $ref: 'Extension#' },
       },
       500: {
         description: 'Error response',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
-      }
-    }
-  }
+          error: { type: 'string' },
+        },
+      },
+    },
+  },
 };
 
 export const createExtensionOptions: RouteOptionsWithoutHandler = {
@@ -97,8 +97,8 @@ export const createExtensionOptions: RouteOptionsWithoutHandler = {
       required: ['sip_driver', 'extension_number'],
       properties: {
         sip_driver: { type: 'string', enum: Object.values(SipDriverEnum) },
-        extension_number: { type: 'string' }
-      }
+        extension_number: { type: 'string' },
+      },
     },
     response: {
       201: { $ref: 'Extension#' },
@@ -106,11 +106,11 @@ export const createExtensionOptions: RouteOptionsWithoutHandler = {
         description: 'Error response',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
-      }
-    }
-  }
+          error: { type: 'string' },
+        },
+      },
+    },
+  },
 };
 
 export const updateExtensionOptions: RouteOptionsWithoutHandler = {
@@ -125,14 +125,14 @@ export const updateExtensionOptions: RouteOptionsWithoutHandler = {
       required: [],
       properties: {
         sip_driver: { type: 'string', enum: Object.values(SipDriverEnum) },
-        extension_number: { type: 'string' }
-      }
+        extension_number: { type: 'string' },
+      },
     },
     params: {
       type: 'object',
       properties: {
-        extension_number: { type: 'string' }
-      }
+        extension_number: { type: 'string' },
+      },
     },
     response: {
       200: { $ref: 'Extension#' },
@@ -140,18 +140,18 @@ export const updateExtensionOptions: RouteOptionsWithoutHandler = {
         description: 'Extension not found',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
+          error: { type: 'string' },
+        },
       },
       500: {
         description: 'Error response',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
-      }
-    }
-  }
+          error: { type: 'string' },
+        },
+      },
+    },
+  },
 };
 
 export const deleteExtensionOptions: RouteOptionsWithoutHandler = {
@@ -164,33 +164,33 @@ export const deleteExtensionOptions: RouteOptionsWithoutHandler = {
     params: {
       type: 'object',
       properties: {
-        extension_number: { type: 'string' }
-      }
+        extension_number: { type: 'string' },
+      },
     },
     response: {
       204: {
         description: 'Extension successfully deleted',
         type: 'object',
         properties: {
-          message: { type: 'string' }
-        }
+          message: { type: 'string' },
+        },
       },
       404: {
         description: 'Extension not found',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
+          error: { type: 'string' },
+        },
       },
       500: {
         description: 'Error response',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
-      }
-    }
-  }
+          error: { type: 'string' },
+        },
+      },
+    },
+  },
 };
 
 export const updateExtensionStatusOptions: RouteOptionsWithoutHandler = {
@@ -204,14 +204,14 @@ export const updateExtensionStatusOptions: RouteOptionsWithoutHandler = {
       type: 'object',
       required: ['status'],
       properties: {
-        status: { type: 'string', enum: Object.values(ExtensionStatusEnum) }
-      }
+        status: { type: 'string', enum: Object.values(ExtensionStatusEnum) },
+      },
     },
     params: {
       type: 'object',
       properties: {
-        extension_number: { type: 'string' }
-      }
+        extension_number: { type: 'string' },
+      },
     },
     response: {
       200: { $ref: 'Extension#' },
@@ -219,16 +219,16 @@ export const updateExtensionStatusOptions: RouteOptionsWithoutHandler = {
         description: 'Extension not found',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
+          error: { type: 'string' },
+        },
       },
       500: {
         description: 'Error response',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
-      }
-    }
-  }
+          error: { type: 'string' },
+        },
+      },
+    },
+  },
 };

@@ -5,29 +5,29 @@ export const swaggerOptions = {
     info: {
       title: 'Asterisk Callout API',
       description: 'Asterisk Callout API Documentation',
-      version: '1.0.0'
+      version: '1.0.0',
     },
     consumes: ['application/json'],
     produces: ['application/json'],
     servers: [
       {
-        url: config.api.hostname
-      }
+        url: config.api.hostname,
+      },
     ],
     components: {},
     tags: [
       {
         name: 'calls',
-        description: 'Calls endpoints'
+        description: 'Calls endpoints',
       },
       {
         name: 'extensions',
-        description: 'PBX extensions'
+        description: 'PBX extensions',
       },
       {
         name: 'monitoring',
-        description: 'Monitoring endpoints'
-      }
-    ]
-  }
+        description: 'Monitoring endpoints',
+      },
+    ],
+  },
 };

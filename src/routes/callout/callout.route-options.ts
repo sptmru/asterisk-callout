@@ -15,28 +15,28 @@ export const calloutPlaybackRouteOptions: RouteOptionsWithoutHandler = {
         numbers: {
           type: 'array',
           items: {
-            type: 'string'
-          }
-        }
-      }
+            type: 'string',
+          },
+        },
+      },
     },
     response: {
       200: {
         description: 'Successful response',
         type: 'object',
         properties: {
-          message: { type: 'string' }
-        }
+          message: { type: 'string' },
+        },
       },
       500: {
         description: 'Error response',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
-      }
-    }
-  }
+          error: { type: 'string' },
+        },
+      },
+    },
+  },
 };
 
 export const calloutFreeOperatorsRouteOptions: RouteOptionsWithoutHandler = {
@@ -51,16 +51,16 @@ export const calloutFreeOperatorsRouteOptions: RouteOptionsWithoutHandler = {
         description: 'Successful response',
         type: 'object',
         properties: {
-          message: { type: 'string' }
-        }
+          message: { type: 'string' },
+        },
       },
       500: {
         description: 'Error response',
         type: 'object',
         properties: {
-          error: { type: 'string' }
-        }
-      }
-    }
-  }
+          error: { type: 'string' },
+        },
+      },
+    },
+  },
 };
