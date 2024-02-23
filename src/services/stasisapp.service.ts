@@ -1,7 +1,7 @@
 import { Channel, Client } from 'ari-client';
 import { logger } from '../misc/Logger';
 
-export class StasisAppsService {
+export class StasisAppService {
   static async startStasisApp(client: Client, appName: string): Promise<void> {
     logger.debug(`Starting Stasis app ${appName}...`);
     try {

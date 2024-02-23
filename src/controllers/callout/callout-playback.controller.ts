@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { PhoneNumberWithSound } from '../../domain/types/phonenumberwithsound.type';
-import { CalloutService } from '../../services/CalloutService';
+import { CalloutService } from '../../services/callout.service';
 import { logger } from '../../misc/Logger';
 import { playbackCalloutBody } from '../../domain/types/playbackcalloutbody.type';
 

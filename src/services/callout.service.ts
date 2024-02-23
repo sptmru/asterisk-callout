@@ -2,7 +2,7 @@ import { AriData } from '../domain/types/aridata.type';
 import { logger } from '../misc/Logger';
 import { PhoneNumberWithSound } from '../domain/types/phonenumberwithsound.type';
 import { Channel, LiveRecording, Playback } from 'ari-client';
-import { ExtensionsService } from './ExtensionsService';
+import { ExtensionService } from './extension.service';
 import { ExtensionStatusEnum } from '../domain/enums/extensionstatus.enum';
 
 export class CalloutService {
@@ -150,7 +150,7 @@ export class CalloutService {
   }
 
   static async callAllAvailableOperators(ariData): Promise<Channel[]> {
-    const availableExtensions = await ExtensionsService.getExtensionsByStatus(ExtensionStatusEnum.AVAILABLE);
+    const availableExtensions = await ExtensionService.getExtensionsByStatus(ExtensionStatusEnum.AVAILABLE);
     return this.startOperatorGroupCall(
       ariData,
       availableExtensions.map(extension => `${extension.sip_driver}/${extension.extension_number}`)

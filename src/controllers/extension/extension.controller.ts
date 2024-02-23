@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { GetExtensionsByStatusParams } from '../../domain/types/extensions/getExtensionsByStatusQuerystring.type';
-import { ExtensionsService } from '../../services/ExtensionsService';
+import { ExtensionService } from '../../services/extension.service';
 import { logger } from '../../misc/Logger';
 import { CreateExtensionBody } from '../../domain/types/extensions/createExtensionBody.type';
 import { Extension } from '../../domain/entities/extension.entity';
@@ -9,14 +9,14 @@ import { UpdateExtensionBody } from '../../domain/types/extensions/updateExtensi
 import {
   DeleteExtensionParams,
   GetExtensionParams,
-  UpdateExtensionParams
+  UpdateExtensionParams,
 } from '../../domain/types/extensions/updateExtensionParams.type';
 import { UpdateExtensionStatusBody } from '../../domain/types/extensions/updateExtensionStatusBody';
 
-export class ExtensionsController {
+export class ExtensionController {
   static async getAllExtensions(_request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
     try {
-      const extensions = await ExtensionsService.getExtensions();
+      const extensions = await ExtensionService.getExtensions();
       return reply.code(200).send(extensions);
     } catch (err) {
       logger.error(`Error while getting all extensions ${err.message}`);
@@ -30,7 +30,7 @@ export class ExtensionsController {
   ): Promise<FastifyReply> {
     try {
       const { extension_number } = request.params;
-      const extension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
+      const extension = await ExtensionService.getExtensionByNumber(extension_number);
       if (extension === null) {
         return reply.code(404).send({ error: `Extension ${extension_number} not found` });
       }
@@ -48,7 +48,7 @@ export class ExtensionsController {
   ): Promise<FastifyReply> {
     try {
       const { status } = request.params;
-      const extensions = await ExtensionsService.getExtensionsByStatus(status);
+      const extensions = await ExtensionService.getExtensionsByStatus(status);
       return reply.code(200).send(extensions);
     } catch (err) {
       logger.error(`Error while looking for extensions by status: ${err.message}`);
@@ -63,16 +63,12 @@ export class ExtensionsController {
     try {
       const { sip_driver, extension_number } = request.body;
 
-      const existingExtension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
+      const existingExtension = await ExtensionService.getExtensionByNumber(extension_number);
       if (existingExtension !== null) {
         return reply.code(400).send({ error: `Extension ${extension_number} already exists` });
       }
 
-      const extensionData = new Extension();
-      extensionData.sip_driver = sip_driver;
-      extensionData.extension_number = extension_number;
-
-      const extension = await dataSource.manager.save(extensionData);
+      const extension = await ExtensionService.createExtension({ sip_driver, extension_number });
       return reply.code(201).send(extension);
     } catch (err) {
       logger.error(`Error while creating an extension: ${err.message}`);
@@ -124,14 +120,12 @@ export class ExtensionsController {
   ): Promise<FastifyReply> {
     try {
       const { extension_number } = request.params;
-      const extension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
+      const extension = await ExtensionService.getExtensionByNumber(extension_number);
       if (extension === null) {
         return reply.code(404).send({ error: `Extension ${extension_number} not found` });
       }
 
-      await dataSource.manager.remove(extension);
-      await dataSource.manager.remove(extension.data);
-
+      await ExtensionService.deleteExtension(extension);
       return reply.code(204).send({ message: 'Extension deleted successfully' });
     } catch (err) {
       logger.error(`Error while deleting an extension: ${err.message}`);

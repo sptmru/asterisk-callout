@@ -3,8 +3,9 @@ import { Endpoint } from 'ari-client';
 import { Extension } from '../domain/entities/extension.entity';
 import { dataSource } from '../infrastructure/database/data-source';
 import { ExtensionStatusEnum } from '../domain/enums/extensionstatus.enum';
+import { CreateExtensionBody } from '../domain/types/extensions/createExtensionBody.type';
 
-export class ExtensionsService {
+export class ExtensionService {
   static async getAriEndpoints(ariData: AriData): Promise<Endpoint[]> {
     const { client } = ariData;
     return await client.endpoints.list();
@@ -21,5 +22,24 @@ export class ExtensionsService {
       .innerJoinAndSelect('extension.data', 'extensionStatus')
       .where('extensionStatus.state = :status', { status })
       .getMany();
+  }
+
+  static async getExtensionByNumber(extensionNumber: string): Promise<Extension | null> {
+    return await dataSource.getRepository(Extension).findOne({ where: { extension_number: extensionNumber } });
+  }
+
+  static async createExtension(extensionData: CreateExtensionBody): Promise<Extension> {
+    let extension = new Extension();
+    extension.sip_driver = extensionData.sip_driver;
+    extension.extension_number = extensionData.extension_number;
+
+    extension = await dataSource.manager.save(extension);
+    return extension;
+  }
+
+  static async deleteExtension(extension: Extension): Promise<void> {
+    await dataSource.manager.remove(extension);
+    await dataSource.manager.remove(extension.data);
+    return;
   }
 }

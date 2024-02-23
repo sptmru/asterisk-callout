@@ -3,13 +3,13 @@ import { Client } from 'ari-client';
 
 import { config, ariUrl } from './infrastructure/config/config';
 import { logger } from './misc/Logger';
-import { StasisAppsService } from './services/StasisAppsService';
+import { StasisAppService } from './services/stasisapp.service';
 import { dataSource, dataSourceInitializer } from './infrastructure/database/data-source';
 import { Api } from './infrastructure/api/server';
 import { HealthRoute } from './routes/health/health.route';
 import { CalloutRoute } from './routes/callout/callout.route';
 import { ExtensionDefinition } from './domain/definitions/extension.definition';
-import { ExtensionsRoute } from './routes/extensions/extensions.route';
+import { ExtensionRoute } from './routes/extension/extensions.route';
 import { ExtensionStatusDefinition } from './domain/definitions/extensionStatus.definition';
 
 /* eslint-disable @typescript-eslint/no-floating-promises */
@@ -18,7 +18,7 @@ import { ExtensionStatusDefinition } from './domain/definitions/extensionStatus.
 
   const ariInitializer = async (client: Client): Promise<void> => {
     logger.info(`Successfully connected to ARI`);
-    await StasisAppsService.startStasisApp(client, config.ari.app);
+    await StasisAppService.startStasisApp(client, config.ari.app);
 
     global.ariData = {
       client,
@@ -28,7 +28,7 @@ import { ExtensionStatusDefinition } from './domain/definitions/extensionStatus.
 
     const api = new Api({
       plugins: [],
-      routes: [HealthRoute, CalloutRoute, ExtensionsRoute],
+      routes: [HealthRoute, CalloutRoute, ExtensionRoute],
       definitions: [ExtensionDefinition, ExtensionStatusDefinition],
     });
     api.listen();
