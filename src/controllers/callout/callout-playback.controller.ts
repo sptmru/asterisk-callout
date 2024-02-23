@@ -11,9 +11,7 @@ export class CalloutPlaybackController {
   ): Promise<FastifyReply> {
     try {
       const { numbers } = request.body;
-      const listOfNumbers: PhoneNumberWithSound[] = numbers.map(number => {
-        return { number, sound: 'demo-thanks' };
-      });
+      const listOfNumbers: PhoneNumberWithSound[] = numbers.map(number => ({ number, sound: 'demo-thanks' }));
       await CalloutService.initiateBulkPlaybackCalls(global.ariData, listOfNumbers);
       return reply.code(200).send({ message: 'Callout with playback started' });
     } catch (err) {
