@@ -19,7 +19,7 @@ export class ExtensionsController {
       const extensions = await ExtensionsService.getExtensions();
       return reply.code(200).send(extensions);
     } catch (err) {
-      logger.error(`Error while getting all extensions ${err}`);
+      logger.error(`Error while getting all extensions ${err.message}`);
       return reply.code(500).send({ error: 'Internal server error' });
     }
   }
@@ -37,7 +37,7 @@ export class ExtensionsController {
 
       return reply.code(200).send(extension);
     } catch (err) {
-      logger.error(`Error while getting all extensions ${err}`);
+      logger.error(`Error while getting all extensions ${err.message}`);
       return reply.code(500).send({ error: 'Internal server error' });
     }
   }
@@ -51,7 +51,7 @@ export class ExtensionsController {
       const extensions = await ExtensionsService.getExtensionsByStatus(status);
       return reply.code(200).send(extensions);
     } catch (err) {
-      logger.error(`Error while looking for extensions by status: ${err}`);
+      logger.error(`Error while looking for extensions by status: ${err.message}`);
       return reply.code(500).send({ error: 'Internal server error' });
     }
   }
@@ -75,7 +75,7 @@ export class ExtensionsController {
       const extension = await dataSource.manager.save(extensionData);
       return reply.code(201).send(extension);
     } catch (err) {
-      logger.error(`Error while creating an extension: ${err}`);
+      logger.error(`Error while creating an extension: ${err.message}`);
       return reply.code(500).send({ error: 'Internal server error' });
     }
   }
@@ -113,7 +113,7 @@ export class ExtensionsController {
       extension = await dataSource.manager.save(extension);
       return reply.code(200).send(extension);
     } catch (err) {
-      logger.error(`Error while updating a controller: ${err}`);
+      logger.error(`Error while updating a controller: ${err.message}`);
       return reply.code(500).send('Internal server error');
     }
   }
@@ -136,7 +136,7 @@ export class ExtensionsController {
 
       return reply.code(204).send({ message: 'Extension deleted successfully' });
     } catch (err) {
-      logger.error(`Error while deleting an extension: ${err}`);
+      logger.error(`Error while deleting an extension: ${err.message}`);
       return reply.code(500).send('Internal server error');
     }
   }
@@ -158,7 +158,7 @@ export class ExtensionsController {
       await dataSource.manager.save(extension.data);
       return reply.code(200).send(extension);
     } catch (err) {
-      logger.error(`Error while changing extension status: ${err}`);
+      logger.error(`Error while changing extension status: ${err.message}`);
       return reply.code(500).send('Internal server error');
     }
   }

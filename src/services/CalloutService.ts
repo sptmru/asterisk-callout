@@ -31,11 +31,17 @@ export class CalloutService {
     return liveRecording;
   }
 
-  static async playSound(ariData: AriData, sound: string): Promise<Playback> {
+  static async playSound(ariData: AriData, sound: string, playbackOrNull: Playback | null = null): Promise<Playback> {
     const { client, channel } = ariData;
-    const playback = client.Playback();
-    await channel.play({ media: `sound:${sound}` }, playback);
-    logger.debug(`Playback started on channel ${channel.id}`);
+
+    const playback = playbackOrNull === null ? client.Playback() : playbackOrNull;
+
+    try {
+      await channel.play({ media: `sound:${sound}` }, playback);
+      logger.debug(`Playback started on channel ${channel.id}`);
+    } catch (err) {
+      logger.debug(`Error while trying to play sound: ${err.message}`);
+    }
 
     return playback;
   }
@@ -86,7 +92,7 @@ export class CalloutService {
       });
       logger.debug(`Calling PJSIP/${phoneNumberWithSound.number} on channel ${outgoingChannel.id}`);
     } catch (err) {
-      logger.error(`Failed to call PJSIP/${phoneNumberWithSound.number}: ${err}`);
+      logger.error(`Failed to call PJSIP/${phoneNumberWithSound.number}: ${err.message}`);
     }
     return;
   }

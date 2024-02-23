@@ -22,7 +22,7 @@ const dataSourceInitializer = async dataSource => {
     await dataSource.initialize();
     logger.info(`Data source initialized successfully`);
   } catch (err) {
-    logger.error(`Failed to initialize data source: ${err}`);
+    logger.error(`Failed to initialize data source: ${err.message}`);
     throw err;
   }
 };

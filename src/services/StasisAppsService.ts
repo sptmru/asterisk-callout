@@ -7,7 +7,7 @@ export class StasisAppsService {
     try {
       return await client.start(appName);
     } catch (err) {
-      logger.error(`Failed to start Stasis app ${appName}: ${err}`);
+      logger.error(`Failed to start Stasis app ${appName}: ${err.message}`);
       throw err;
     }
   }
@@ -17,7 +17,7 @@ export class StasisAppsService {
     try {
       return await channel.move({ app: appName, appArgs });
     } catch (err) {
-      logger.error(`Failed to move channel ${channel.id} to Stasis app ${appName}: ${err}`);
+      logger.error(`Failed to move channel ${channel.id} to Stasis app ${appName}: ${err.message}`);
       throw err;
     }
   }

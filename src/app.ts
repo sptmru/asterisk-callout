@@ -37,7 +37,7 @@ import { ExtensionStatusDefinition } from './domain/definitions/extensionStatus.
     .connect(ariUrl, config.ari.username, config.ari.password)
     .then(ariInitializer)
     .catch(err => {
-      logger.error(`Error connecting to ARI: ${err}`);
+      logger.error(`Error connecting to ARI: ${err.message}`);
       process.exit(1);
     });
 })();

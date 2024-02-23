@@ -56,7 +56,7 @@ export class Api {
   public listen() {
     this.app.listen({ port: this.port }, function (err: Error | null): void {
       if (err) {
-        logger.error(`Failed to start Fastify server: ${err}`);
+        logger.error(`Failed to start Fastify server: ${err.message}`);
         process.exit(1);
       } else {
         logger.info(`Fastify server started`);

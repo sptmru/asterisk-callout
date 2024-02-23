@@ -17,7 +17,7 @@ export class CalloutPlaybackController {
       await CalloutService.initiateBulkPlaybackCalls(global.ariData, listOfNumbers);
       return reply.code(200).send({ message: 'Callout with playback started' });
     } catch (err) {
-      logger.error(`Error while handling playback callout: ${err}`);
+      logger.error(`Error while handling playback callout: ${err.message}`);
       return reply.code(500).send({ error: 'Internal serveaaaaaaar error' });
     }
   }
@@ -27,7 +27,7 @@ export class CalloutPlaybackController {
       await CalloutService.callAllAvailableOperators(global.ariData);
       return reply.code(200).send({ message: 'Callout to all free operator started' });
     } catch (err) {
-      logger.error(`Error while doing callout to free operators: ${err}`);
+      logger.error(`Error while doing callout to free operators: ${err.message}`);
       return reply.code(500).send({ error: 'Internal server error' });
     }
   }
