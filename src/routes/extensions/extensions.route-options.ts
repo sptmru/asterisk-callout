@@ -192,3 +192,43 @@ export const deleteExtensionOptions: RouteOptionsWithoutHandler = {
     }
   }
 };
+
+export const updateExtensionStatusOptions: RouteOptionsWithoutHandler = {
+  method: 'PUT',
+  url: `${baseUrl}/:extension_number/status`,
+  schema: {
+    description: 'Accepts extension status and returns updated extension',
+    summary: 'Update extension status',
+    tags: ['extensions'],
+    body: {
+      type: 'object',
+      required: ['status'],
+      properties: {
+        status: { type: 'string', enum: Object.values(ExtensionStatusEnum) }
+      }
+    },
+    params: {
+      type: 'object',
+      properties: {
+        extension_number: { type: 'string' }
+      }
+    },
+    response: {
+      200: { $ref: 'Extension#' },
+      404: {
+        description: 'Extension not found',
+        type: 'object',
+        properties: {
+          error: { type: 'string' }
+        }
+      },
+      500: {
+        description: 'Error response',
+        type: 'object',
+        properties: {
+          error: { type: 'string' }
+        }
+      }
+    }
+  }
+};

@@ -11,6 +11,7 @@ import {
   GetExtensionParams,
   UpdateExtensionParams
 } from '../../domain/types/extensions/updateExtensionParams.type';
+import { UpdateExtensionStatusBody } from '../../domain/types/extensions/updateExtensionStatusBody';
 
 export class ExtensionsController {
   static async getAllExtensions(_request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
@@ -136,6 +137,28 @@ export class ExtensionsController {
       return reply.code(204).send({ message: 'Extension deleted successfully' });
     } catch (err) {
       logger.error(`Error while deleting an extension: ${err}`);
+      return reply.code(500).send('Internal server error');
+    }
+  }
+
+  static async changeExtensionStatus(
+    request: FastifyRequest<{ Params: UpdateExtensionParams; Body: UpdateExtensionStatusBody }>,
+    reply: FastifyReply
+  ): Promise<FastifyReply> {
+    try {
+      const { extension_number } = request.params;
+      const { status } = request.body;
+
+      const extension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
+      if (extension === null) {
+        return reply.code(404).send({ error: `Extension ${extension_number} not found` });
+      }
+
+      extension.data.state = status;
+      await dataSource.manager.save(extension.data);
+      return reply.code(200).send(extension);
+    } catch (err) {
+      logger.error(`Error while changing extension status: ${err}`);
       return reply.code(500).send('Internal server error');
     }
   }
