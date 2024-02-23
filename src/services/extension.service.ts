@@ -25,13 +25,13 @@ export class ExtensionService {
   }
 
   static async getExtensionByNumber(extensionNumber: string): Promise<Extension | null> {
-    return await dataSource.getRepository(Extension).findOne({ where: { extension_number: extensionNumber } });
+    return await dataSource.getRepository(Extension).findOne({ where: { extensionNumber } });
   }
 
   static async createExtension(extensionData: CreateExtensionBody): Promise<Extension> {
     let extension = new Extension();
-    extension.sip_driver = extensionData.sip_driver;
-    extension.extension_number = extensionData.extension_number;
+    extension.sipDriver = extensionData.sipDriver;
+    extension.extensionNumber = extensionData.extensionNumber;
 
     extension = await dataSource.manager.save(extension);
     return extension;

@@ -29,10 +29,10 @@ export class ExtensionController {
     reply: FastifyReply
   ): Promise<FastifyReply> {
     try {
-      const { extension_number } = request.params;
-      const extension = await ExtensionService.getExtensionByNumber(extension_number);
+      const { extensionNumber } = request.params;
+      const extension = await ExtensionService.getExtensionByNumber(extensionNumber);
       if (extension === null) {
-        return reply.code(404).send({ error: `Extension ${extension_number} not found` });
+        return reply.code(404).send({ error: `Extension ${extensionNumber} not found` });
       }
 
       return reply.code(200).send(extension);
@@ -61,14 +61,14 @@ export class ExtensionController {
     reply: FastifyReply
   ): Promise<FastifyReply> {
     try {
-      const { sip_driver, extension_number } = request.body;
+      const { sipDriver, extensionNumber } = request.body;
 
-      const existingExtension = await ExtensionService.getExtensionByNumber(extension_number);
+      const existingExtension = await ExtensionService.getExtensionByNumber(extensionNumber);
       if (existingExtension !== null) {
-        return reply.code(400).send({ error: `Extension ${extension_number} already exists` });
+        return reply.code(400).send({ error: `Extension ${extensionNumber} already exists` });
       }
 
-      const extension = await ExtensionService.createExtension({ sip_driver, extension_number });
+      const extension = await ExtensionService.createExtension({ sipDriver, extensionNumber });
       return reply.code(201).send(extension);
     } catch (err) {
       logger.error(`Error while creating an extension: ${err.message}`);
@@ -81,29 +81,29 @@ export class ExtensionController {
     reply: FastifyReply
   ): Promise<FastifyReply> {
     try {
-      const { extension_number } = request.params;
-      let extension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
+      const { extensionNumber } = request.params;
+      let extension = await dataSource.getRepository(Extension).findOne({ where: { extensionNumber } });
       if (extension === null) {
-        return reply.code(404).send({ error: `Extension ${extension_number} not found` });
+        return reply.code(404).send({ error: `Extension ${extensionNumber} not found` });
       }
-      if (request.body.sip_driver !== undefined) {
-        extension.sip_driver = request.body.sip_driver;
+      if (request.body.sipDriver !== undefined) {
+        extension.sipDriver = request.body.sipDriver;
       }
 
-      if (request.body.extension_number !== undefined) {
-        const new_extension_number = request.body.extension_number;
+      if (request.body.extensionNumber !== undefined) {
+        const newExtensionNumber = request.body.extensionNumber;
         const existingExtension = await dataSource
           .getRepository(Extension)
           .createQueryBuilder('extension')
-          .where('extension.extension_number = :new_extension_number', { new_extension_number })
+          .where('extension.extensionNumber = :newExtensionNumber', { newExtensionNumber })
           .andWhere('extension.id != :currentId', { currentId: extension.id })
           .getOne();
 
         if (existingExtension !== null) {
-          return reply.code(400).send({ error: `Extension ${new_extension_number} already exists` });
+          return reply.code(400).send({ error: `Extension ${newExtensionNumber} already exists` });
         }
 
-        extension.extension_number = new_extension_number;
+        extension.extensionNumber = newExtensionNumber;
       }
 
       extension = await dataSource.manager.save(extension);
@@ -119,10 +119,10 @@ export class ExtensionController {
     reply: FastifyReply
   ): Promise<FastifyReply> {
     try {
-      const { extension_number } = request.params;
-      const extension = await ExtensionService.getExtensionByNumber(extension_number);
+      const { extensionNumber } = request.params;
+      const extension = await ExtensionService.getExtensionByNumber(extensionNumber);
       if (extension === null) {
-        return reply.code(404).send({ error: `Extension ${extension_number} not found` });
+        return reply.code(404).send({ error: `Extension ${extensionNumber} not found` });
       }
 
       await ExtensionService.deleteExtension(extension);
@@ -138,12 +138,12 @@ export class ExtensionController {
     reply: FastifyReply
   ): Promise<FastifyReply> {
     try {
-      const { extension_number } = request.params;
+      const { extensionNumber } = request.params;
       const { status } = request.body;
 
-      const extension = await dataSource.getRepository(Extension).findOne({ where: { extension_number } });
+      const extension = await dataSource.getRepository(Extension).findOne({ where: { extensionNumber } });
       if (extension === null) {
-        return reply.code(404).send({ error: `Extension ${extension_number} not found` });
+        return reply.code(404).send({ error: `Extension ${extensionNumber} not found` });
       }
 
       extension.data.state = status;

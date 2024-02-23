@@ -153,7 +153,7 @@ export class CalloutService {
     const availableExtensions = await ExtensionService.getExtensionsByStatus(ExtensionStatusEnum.AVAILABLE);
     return this.startOperatorGroupCall(
       ariData,
-      availableExtensions.map(extension => `${extension.sip_driver}/${extension.extension_number}`)
+      availableExtensions.map(extension => `${extension.sipDriver}/${extension.extensionNumber}`)
     );
   }
 }

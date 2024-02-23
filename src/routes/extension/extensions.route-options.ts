@@ -30,9 +30,9 @@ export const getAllExtensions: RouteOptionsWithoutHandler = {
 
 export const getExtension: RouteOptionsWithoutHandler = {
   method: 'GET',
-  url: `${baseUrl}/:extension_number`,
+  url: `${baseUrl}/:extensionNumber`,
   schema: {
-    description: 'Gets an extension by extension_number from the DB',
+    description: 'Gets an extension by extensionNumber from the DB',
     summary: 'Get one extension',
     tags: ['extensions'],
     response: {
@@ -89,15 +89,15 @@ export const createExtensionOptions: RouteOptionsWithoutHandler = {
   method: 'POST',
   url: `${baseUrl}`,
   schema: {
-    description: 'Accepts sip_driver (PJSIP/SIP) with an extension number and returns created extension',
+    description: 'Accepts sipDriver (PJSIP/SIP) with an extension number and returns created extension',
     summary: 'Create extension',
     tags: ['extensions'],
     body: {
       type: 'object',
-      required: ['sip_driver', 'extension_number'],
+      required: ['sipDriver', 'extensionNumber'],
       properties: {
-        sip_driver: { type: 'string', enum: Object.values(SipDriverEnum) },
-        extension_number: { type: 'string' },
+        sipDriver: { type: 'string', enum: Object.values(SipDriverEnum) },
+        extensionNumber: { type: 'string' },
       },
     },
     response: {
@@ -115,23 +115,23 @@ export const createExtensionOptions: RouteOptionsWithoutHandler = {
 
 export const updateExtensionOptions: RouteOptionsWithoutHandler = {
   method: 'PUT',
-  url: `${baseUrl}/:extension_number`,
+  url: `${baseUrl}/:extensionNumber`,
   schema: {
-    description: 'Accepts sip_driver (PJSIP/SIP) with an extension number and returns updated extension',
+    description: 'Accepts sipDriver (PJSIP/SIP) with an extension number and returns updated extension',
     summary: 'Update extension',
     tags: ['extensions'],
     body: {
       type: 'object',
       required: [],
       properties: {
-        sip_driver: { type: 'string', enum: Object.values(SipDriverEnum) },
-        extension_number: { type: 'string' },
+        sipDriver: { type: 'string', enum: Object.values(SipDriverEnum) },
+        extensionNumber: { type: 'string' },
       },
     },
     params: {
       type: 'object',
       properties: {
-        extension_number: { type: 'string' },
+        extensionNumber: { type: 'string' },
       },
     },
     response: {
@@ -156,7 +156,7 @@ export const updateExtensionOptions: RouteOptionsWithoutHandler = {
 
 export const deleteExtensionOptions: RouteOptionsWithoutHandler = {
   method: 'DELETE',
-  url: `${baseUrl}/:extension_number`,
+  url: `${baseUrl}/:extensionNumber`,
   schema: {
     description: 'Delete extension by extension number',
     summary: 'Delete extension',
@@ -164,7 +164,7 @@ export const deleteExtensionOptions: RouteOptionsWithoutHandler = {
     params: {
       type: 'object',
       properties: {
-        extension_number: { type: 'string' },
+        extensionNumber: { type: 'string' },
       },
     },
     response: {
@@ -195,7 +195,7 @@ export const deleteExtensionOptions: RouteOptionsWithoutHandler = {
 
 export const updateExtensionStatusOptions: RouteOptionsWithoutHandler = {
   method: 'PUT',
-  url: `${baseUrl}/:extension_number/status`,
+  url: `${baseUrl}/:extensionNumber/status`,
   schema: {
     description: 'Accepts extension status and returns updated extension',
     summary: 'Update extension status',
@@ -210,7 +210,7 @@ export const updateExtensionStatusOptions: RouteOptionsWithoutHandler = {
     params: {
       type: 'object',
       properties: {
-        extension_number: { type: 'string' },
+        extensionNumber: { type: 'string' },
       },
     },
     response: {

@@ -16,12 +16,12 @@ export class ExtensionRoute {
   // eslint-disable-next-line require-await
   async routes(fastify: FastifyInstance): Promise<void> {
     fastify.get('', getAllExtensions, ExtensionController.getAllExtensions);
-    fastify.get('/:extension_number', getExtension, ExtensionController.getExtension);
+    fastify.get('/:extensionNumber', getExtension, ExtensionController.getExtension);
     fastify.get('/filter/:status', getExtensionsByStatusOptions, ExtensionController.getExtensionsByStatus);
     fastify.post('', createExtensionOptions, ExtensionController.createExtension);
-    fastify.put('/:extension_number', updateExtensionOptions, ExtensionController.updateExtension);
-    fastify.delete('/:extension_number', deleteExtensionOptions, ExtensionController.deleteExtension);
+    fastify.put('/:extensionNumber', updateExtensionOptions, ExtensionController.updateExtension);
+    fastify.delete('/:extensionNumber', deleteExtensionOptions, ExtensionController.deleteExtension);
 
-    fastify.put('/:extension_number/status', updateExtensionStatusOptions, ExtensionController.changeExtensionStatus);
+    fastify.put('/:extensionNumber/status', updateExtensionStatusOptions, ExtensionController.changeExtensionStatus);
   }
 }

@@ -9,12 +9,12 @@ export class Extension {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column({ type: 'enum', enum: SipDriverEnum, default: SipDriverEnum.PJSIP })
-  sip_driver: string;
+  @Column({ name: 'sip_driver', type: 'enum', enum: SipDriverEnum, default: SipDriverEnum.PJSIP })
+  sipDriver: string;
 
   @Index(['extension_number'], { unique: true })
-  @Column('varchar', { length: 10, nullable: false })
-  extension_number: string;
+  @Column('varchar', { name: 'extension_number', length: 10, nullable: false })
+  extensionNumber: string;
 
   @OneToOne(() => ExtensionStatus, { eager: true, cascade: true, onDelete: 'CASCADE' })
   @JoinColumn()

@@ -1,5 +1,5 @@
 export type UpdateExtensionParams = {
-  extension_number: string;
+  extensionNumber: string;
 };
 
 export type DeleteExtensionParams = UpdateExtensionParams;
