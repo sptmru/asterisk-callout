@@ -15,6 +15,7 @@
     "@typescript-eslint/strict-boolean-expressions": 2,
     "@typescript-eslint/no-unnecessary-condition": 2,
     "@typescript-eslint/no-floating-promises": 2,
+    "max-params": [2, 3],
     "no-shadow": 2,
     "complexity": 2
   },
