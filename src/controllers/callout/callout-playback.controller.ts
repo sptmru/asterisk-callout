@@ -18,6 +18,16 @@ export class CalloutPlaybackController {
       return reply.code(200).send({ message: 'Callout with playback started' });
     } catch (err) {
       logger.error(`Error while handling playback callout: ${err}`);
+      return reply.code(500).send({ error: 'Internal serveaaaaaaar error' });
+    }
+  }
+
+  static async calloutFreeOperators(_request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+    try {
+      await CalloutService.callAllAvailableOperators(global.ariData);
+      return reply.code(200).send({ message: 'Callout to all free operator started' });
+    } catch (err) {
+      logger.error(`Error while doing callout to free operators: ${err}`);
       return reply.code(500).send({ error: 'Internal server error' });
     }
   }

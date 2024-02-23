@@ -2,6 +2,8 @@ import { AriData } from '../domain/types/aridata.type';
 import { logger } from '../misc/Logger';
 import { PhoneNumberWithSound } from '../domain/types/phonenumberwithsound.type';
 import { Channel, LiveRecording, Playback } from 'ari-client';
+import { ExtensionsService } from './ExtensionsService';
+import { ExtensionStatusEnum } from '../domain/enums/extensionstatus.enum';
 
 export class CalloutService {
   static async createRecordingSnoopChannel(ariData: AriData, recordingNumber: string): Promise<LiveRecording> {
@@ -96,5 +98,53 @@ export class CalloutService {
     } catch (err) {
       logger.debug(`Failed to hangup channel ${channel.id} — nothing to hangup`);
     }
+  }
+
+  static async startOperatorGroupCall(ariData: AriData, extensionNumbers: string[]): Promise<Channel[]> {
+    const { client, appName: app } = ariData;
+
+    const channels = extensionNumbers.map(endpoint => {
+      const channel = client.Channel();
+
+      channel.once('ChannelDestroyed', () => {
+        logger.debug(`Got ChannelDestroyed on channel ${channel.id}`);
+      });
+
+      channel.once('StasisStart', () => {
+        logger.debug(`Got StasisStart on channel ${channel.id}`);
+
+        channel.once('StasisEnd', () => {
+          logger.debug(`Got StasisEnd on channel ${channel.id}`);
+        });
+
+        channel.answer(async () => {
+          logger.debug(`Channel ${channel.id} answered, playing demo-thanks...`);
+          const playback = await this.playSound({ channel, client }, 'demo-thanks');
+
+          playback.once('PlaybackFinished', async () => {
+            logger.debug(`Playback finished on channel ${channel.id}, hanging up...`);
+            this.hangupChannel(channel);
+          });
+        });
+      });
+
+      channel.originate({
+        endpoint,
+        app,
+        appArgs: 'dialed'
+      });
+
+      return channel;
+    });
+
+    return channels;
+  }
+
+  static async callAllAvailableOperators(ariData): Promise<Channel[]> {
+    const availableExtensions = await ExtensionsService.getExtensionsByStatus(ExtensionStatusEnum.AVAILABLE);
+    return this.startOperatorGroupCall(
+      ariData,
+      availableExtensions.map(extension => `${extension.sip_driver}/${extension.extension_number}`)
+    );
   }
 }
