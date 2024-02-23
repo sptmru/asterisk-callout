@@ -16,7 +16,6 @@ Thumbs.db
 
 # IDE files
 .vscode/*
-!.vscode/launch.json
 
 .idea
 
