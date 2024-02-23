@@ -12,7 +12,8 @@
   "rules": {
     "@typescript-eslint/no-unused-vars": 2,
     "@typescript-eslint/no-explicit-any": 2,
-    "@typescript-eslint/strict-boolean-expressions": 2
+    "@typescript-eslint/strict-boolean-expressions": 2,
+    "complexity": 2
   },
   "ignorePatterns": ["build/*"]
 }
