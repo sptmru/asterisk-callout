@@ -36,15 +36,7 @@ export const getExtension: RouteOptionsWithoutHandler = {
     summary: 'Get one extension',
     tags: ['extensions'],
     response: {
-      200: {
-        description: 'Successful response',
-        type: 'object',
-        properties: {
-          id: { type: 'string' },
-          sip_driver: { type: 'string', enum: Object.values(SipDriverEnum) },
-          extension_number: { type: 'string' }
-        }
-      },
+      200: { $ref: 'Extension#' },
       404: {
         description: 'Extension not found',
         type: 'object',
@@ -109,15 +101,7 @@ export const createExtensionOptions: RouteOptionsWithoutHandler = {
       }
     },
     response: {
-      201: {
-        description: 'Extension successfully created',
-        type: 'object',
-        properties: {
-          id: { type: 'string' },
-          sip_driver: { type: 'string', enum: Object.values(SipDriverEnum) },
-          extension_number: { type: 'string' }
-        }
-      },
+      201: { $ref: 'Extension#' },
       500: {
         description: 'Error response',
         type: 'object',
@@ -151,15 +135,7 @@ export const updateExtensionOptions: RouteOptionsWithoutHandler = {
       }
     },
     response: {
-      200: {
-        description: 'Extension successfully updated',
-        type: 'object',
-        properties: {
-          id: { type: 'string' },
-          sip_driver: { type: 'string', enum: Object.values(SipDriverEnum) },
-          extension_number: { type: 'string' }
-        }
-      },
+      200: { $ref: 'Extension#' },
       404: {
         description: 'Extension not found',
         type: 'object',
