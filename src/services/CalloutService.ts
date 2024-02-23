@@ -48,7 +48,7 @@ export class CalloutService {
 
   static async initiateBulkPlaybackCalls(ariData: AriData, numbersWithSound: PhoneNumberWithSound[]): Promise<void> {
     for (const phoneNumberWithSound of numbersWithSound) {
-      this.initiatePlaybackCall(ariData, phoneNumberWithSound).then();
+      await this.initiatePlaybackCall(ariData, phoneNumberWithSound).then();
     }
   }
 
@@ -109,40 +109,42 @@ export class CalloutService {
   static async startOperatorGroupCall(ariData: AriData, extensionNumbers: string[]): Promise<Channel[]> {
     const { client, appName: app } = ariData;
 
-    const channels = extensionNumbers.map(endpoint => {
-      const channel = client.Channel();
-      const playback = client.Playback();
+    const channels = await Promise.all(
+      extensionNumbers.map(async endpoint => {
+        const channel = client.Channel();
+        const playback = client.Playback();
 
-      channel.once('ChannelDestroyed', () => {
-        logger.debug(`Got ChannelDestroyed on channel ${channel.id}`);
-      });
-
-      channel.once('StasisStart', () => {
-        logger.debug(`Got StasisStart on channel ${channel.id}`);
-
-        channel.once('StasisEnd', () => {
-          logger.debug(`Got StasisEnd on channel ${channel.id}`);
+        channel.once('ChannelDestroyed', () => {
+          logger.debug(`Got ChannelDestroyed on channel ${channel.id}`);
         });
 
-        channel.answer(async () => {
-          logger.debug(`Channel ${channel.id} answered, playing demo-thanks...`);
-          await this.playSound({ channel, client }, 'demo-thanks', playback);
+        channel.once('StasisStart', () => {
+          logger.debug(`Got StasisStart on channel ${channel.id}`);
 
-          playback.on('PlaybackFinished', async () => {
-            logger.debug(`Playback finished on channel ${channel.id}, repeating playback...`);
+          channel.once('StasisEnd', () => {
+            logger.debug(`Got StasisEnd on channel ${channel.id}`);
+          });
+
+          channel.answer(async () => {
+            logger.debug(`Channel ${channel.id} answered, playing demo-thanks...`);
             await this.playSound({ channel, client }, 'demo-thanks', playback);
+
+            playback.on('PlaybackFinished', async () => {
+              logger.debug(`Playback finished on channel ${channel.id}, repeating playback...`);
+              await this.playSound({ channel, client }, 'demo-thanks', playback);
+            });
           });
         });
-      });
 
-      channel.originate({
-        endpoint,
-        app,
-        appArgs: 'dialed'
-      });
+        await channel.originate({
+          endpoint,
+          app,
+          appArgs: 'dialed'
+        });
 
-      return channel;
-    });
+        return channel;
+      })
+    );
 
     return channels;
   }

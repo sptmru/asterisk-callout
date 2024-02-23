@@ -28,8 +28,10 @@ export class Api {
       done();
     });
 
+    /* eslint-disable @typescript-eslint/no-floating-promises */
     this.app.register(fastifySwagger, swaggerOptions);
     this.app.register(fastifySwaggerUi, swaggerUiOptions);
+    /* eslint-enable @typescript-eslint/no-floating-promises */
 
     this.register(appInit.plugins);
     this.routes(appInit.routes);
@@ -37,15 +39,15 @@ export class Api {
   }
 
   private register(plugins: { forEach: (arg0: (plugin: any) => void) => void }) {
-    plugins.forEach(plugin => {
-      this.app.register(plugin);
+    plugins.forEach(async plugin => {
+      await this.app.register(plugin);
     });
   }
 
   public routes(routes: { forEach: (arg0: (routes: any) => void) => void }) {
-    routes.forEach(route => {
+    routes.forEach(async route => {
       const router = new route();
-      this.app.register(router.routes, { prefix: `${this.basePrefix}${router.prefix}` });
+      await this.app.register(router.routes, { prefix: `${this.basePrefix}${router.prefix}` });
     });
   }
 

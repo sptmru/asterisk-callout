@@ -12,6 +12,7 @@ import { ExtensionDefinition } from './domain/definitions/extension.definition';
 import { ExtensionsRoute } from './routes/extensions/extensions.route';
 import { ExtensionStatusDefinition } from './domain/definitions/extensionStatus.definition';
 
+/* eslint-disable @typescript-eslint/no-floating-promises */
 (async () => {
   await dataSourceInitializer(dataSource);
 
@@ -41,3 +42,4 @@ import { ExtensionStatusDefinition } from './domain/definitions/extensionStatus.
       process.exit(1);
     });
 })();
+/* eslint-enable @typescript-eslint/no-floating-promises */
