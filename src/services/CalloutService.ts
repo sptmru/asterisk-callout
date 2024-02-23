@@ -111,6 +111,7 @@ export class CalloutService {
 
     const channels = extensionNumbers.map(endpoint => {
       const channel = client.Channel();
+      const playback = client.Playback();
 
       channel.once('ChannelDestroyed', () => {
         logger.debug(`Got ChannelDestroyed on channel ${channel.id}`);
@@ -125,11 +126,11 @@ export class CalloutService {
 
         channel.answer(async () => {
           logger.debug(`Channel ${channel.id} answered, playing demo-thanks...`);
-          const playback = await this.playSound({ channel, client }, 'demo-thanks');
+          await this.playSound({ channel, client }, 'demo-thanks', playback);
 
-          playback.once('PlaybackFinished', async () => {
-            logger.debug(`Playback finished on channel ${channel.id}, hanging up...`);
-            this.hangupChannel(channel);
+          playback.on('PlaybackFinished', async () => {
+            logger.debug(`Playback finished on channel ${channel.id}, repeating playback...`);
+            await this.playSound({ channel, client }, 'demo-thanks', playback);
           });
         });
       });
