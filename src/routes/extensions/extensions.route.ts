@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyPluginOptions } from 'fastify';
+import { FastifyInstance } from 'fastify';
 import {
   createExtensionOptions,
   deleteExtensionOptions,
@@ -13,7 +13,7 @@ import { ExtensionsController } from '../../controllers/extensions/extensions.co
 export class ExtensionsRoute {
   public prefix: string = '/extensions';
 
-  async routes(fastify: FastifyInstance, _options: FastifyPluginOptions): Promise<void> {
+  async routes(fastify: FastifyInstance): Promise<void> {
     fastify.get('', getAllExtensions, ExtensionsController.getAllExtensions);
     fastify.get('/:extension_number', getExtension, ExtensionsController.getExtension);
     fastify.get('/filter/:status', getExtensionsByStatusOptions, ExtensionsController.getExtensionsByStatus);
