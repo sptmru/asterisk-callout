@@ -44,7 +44,7 @@ export class Api {
     });
   }
 
-  public routes(routes: { forEach: (arg0: (routes: any) => void) => void }) {
+  public routes(routes: { forEach: (arg0: (route: any) => void) => void }) {
     routes.forEach(async route => {
       const router = new route();
       await this.app.register(router.routes, { prefix: `${this.basePrefix}${router.prefix}` });

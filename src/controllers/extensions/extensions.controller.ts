@@ -95,19 +95,19 @@ export class ExtensionsController {
       }
 
       if (request.body.extension_number !== undefined) {
-        const extension_number = request.body.extension_number;
+        const new_extension_number = request.body.extension_number;
         const existingExtension = await dataSource
           .getRepository(Extension)
           .createQueryBuilder('extension')
-          .where('extension.extension_number = :extension_number', { extension_number })
+          .where('extension.extension_number = :new_extension_number', { new_extension_number })
           .andWhere('extension.id != :currentId', { currentId: extension.id })
           .getOne();
 
         if (existingExtension !== null) {
-          return reply.code(400).send({ error: `Extension ${extension_number} already exists` });
+          return reply.code(400).send({ error: `Extension ${new_extension_number} already exists` });
         }
 
-        extension.extension_number = extension_number;
+        extension.extension_number = new_extension_number;
       }
 
       extension = await dataSource.manager.save(extension);
