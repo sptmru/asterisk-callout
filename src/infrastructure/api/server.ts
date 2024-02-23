@@ -22,7 +22,7 @@ export class Api {
     });
 
     this.app.addHook('preHandler', (req, _reply, done) => {
-      if (req.body) {
+      if (typeof req.body === 'object') {
         req.log.info({ body: req.body }, 'parsed body');
       }
       done();

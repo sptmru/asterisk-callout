@@ -90,11 +90,11 @@ export class ExtensionsController {
       if (extension === null) {
         return reply.code(404).send({ error: `Extension ${extension_number} not found` });
       }
-      if (request.body?.sip_driver) {
+      if (request.body?.sip_driver !== undefined) {
         extension.sip_driver = request.body.sip_driver;
       }
 
-      if (request.body?.extension_number) {
+      if (request.body?.extension_number !== undefined) {
         const extension_number = request.body.extension_number;
         const existingExtension = await dataSource
           .getRepository(Extension)
@@ -130,7 +130,7 @@ export class ExtensionsController {
       }
 
       await dataSource.manager.remove(extension);
-      if (extension.data) {
+      if (extension.data !== undefined) {
         await dataSource.manager.remove(extension.data);
       }
 
