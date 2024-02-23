@@ -17,7 +17,7 @@ const dataSource = new DataSource({
   subscribers: ['src/subscribers/**/*.ts']
 });
 
-const dataSourceInitializer = async (ds: DataSource) => {
+const dataSourceInitializer = async (ds: DataSource): Promise<void> => {
   try {
     await ds.initialize();
     logger.info(`Data source initialized successfully`);

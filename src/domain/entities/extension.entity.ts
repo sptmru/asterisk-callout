@@ -21,7 +21,7 @@ export class Extension {
   data: ExtensionStatus;
 
   @BeforeInsert()
-  async createExtensionStatus() {
+  async createExtensionStatus(): Promise<void> {
     let status = new ExtensionStatus();
     status.state = ExtensionStatusEnum.UNAVAILABLE;
 

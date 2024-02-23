@@ -5,7 +5,8 @@ import { calloutFreeOperatorsRouteOptions, calloutPlaybackRouteOptions } from '.
 export class CalloutRoute {
   public prefix: string = '/callout';
 
-  routes(fastify: FastifyInstance): void {
+  // eslint-disable-next-line require-await
+  async routes(fastify: FastifyInstance): Promise<void> {
     fastify.post('/playback', calloutPlaybackRouteOptions, CalloutPlaybackController.calloutPlayback);
     fastify.post('/free-operators', calloutFreeOperatorsRouteOptions, CalloutPlaybackController.calloutFreeOperators);
   }

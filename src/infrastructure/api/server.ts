@@ -38,26 +38,26 @@ export class Api {
     this.addDefinitions(appInit.definitions);
   }
 
-  private register(plugins: { forEach: (arg0: (plugin: any) => void) => void }) {
+  private register(plugins: { forEach: (arg0: (plugin: any) => void) => void }): void {
     plugins.forEach(async plugin => {
       await this.app.register(plugin);
     });
   }
 
-  public routes(routes: { forEach: (arg0: (route: any) => void) => void }) {
+  public routes(routes: { forEach: (arg0: (route: any) => void) => void }): void {
     routes.forEach(async route => {
       const router = new route();
       await this.app.register(router.routes, { prefix: `${this.basePrefix}${router.prefix}` });
     });
   }
 
-  private addDefinitions(definitions: { forEach: (arg0: (routes: any) => void) => void }) {
+  private addDefinitions(definitions: { forEach: (arg0: (routes: any) => void) => void }): void {
     definitions.forEach(definition => {
       this.app.addSchema(definition);
     });
   }
 
-  public listen() {
+  public listen(): void {
     this.app.listen({ port: this.port }, function (err: Error | null): void {
       if (err) {
         logger.error(`Failed to start Fastify server: ${err.message}`);

@@ -13,7 +13,7 @@ import { ExtensionsRoute } from './routes/extensions/extensions.route';
 import { ExtensionStatusDefinition } from './domain/definitions/extensionStatus.definition';
 
 /* eslint-disable @typescript-eslint/no-floating-promises */
-(async () => {
+(async (): Promise<void> => {
   await dataSourceInitializer(dataSource);
 
   const ariInitializer = async (client: Client): Promise<void> => {
