@@ -2,6 +2,9 @@
   "name": "asterisk-callout",
   "version": "1.0.0",
   "description": "Asterisk callout app",
+  "repository": "https://github.com/sptmru/asterisk-callout",
+  "author": "Soslan Aldatov <soslanaldatov@gmail.com>",
+  "license": "WTFPL",
   "main": "src/app.ts",
   "scripts": {
     "start": "ts-node --swc src/app.ts",
@@ -17,8 +20,6 @@
     "lint:fix": "eslint --fix --ext .ts",
     "format": "prettier --write \"**/*.{js,ts}\""
   },
-  "author": "Soslan Aldatov <soslanaldatov@gmail.com>",
-  "license": "ISC",
   "devDependencies": {
     "@swc/core": "^1.4.1",
     "@types/ari-client": "^2.2.12",
