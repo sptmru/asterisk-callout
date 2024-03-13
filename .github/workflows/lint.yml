@@ -1,4 +1,4 @@
-name: Run ESLint check
+name: Run ESLint and Prettier checks
 
 on:
   pull_request:
@@ -11,16 +11,21 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Install dependencies
         run: npm install
-
       - name: Lint code
         run: npm run lint --if-present
-
       - name: Check for ESLint errors
         run: npm run lint -- --max-warnings=0
+  prettier-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Format code
+        run: npm run format
