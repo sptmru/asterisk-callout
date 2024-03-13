@@ -149,7 +149,7 @@ export class CalloutService {
     return channels;
   }
 
-  static async callAllAvailableOperators(ariData): Promise<Channel[]> {
+  static async callAllAvailableOperators(ariData: AriData): Promise<Channel[]> {
     const availableExtensions = await ExtensionService.getExtensionsByStatus(ExtensionStatusEnum.AVAILABLE);
     return this.startOperatorGroupCall(
       ariData,
