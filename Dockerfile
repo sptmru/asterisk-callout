@@ -4,6 +4,3 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
-COPY .env.example build/.env
-WORKDIR /usr/src/app/build
-CMD ["node", "app.js"]
