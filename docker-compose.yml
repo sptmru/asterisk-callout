@@ -7,7 +7,7 @@ services:
     ports:
       - '${DB_PORT:-5432}:${DB_INTERNAL_PORT:-5432}'
     volumes:
-      - data:/var/lib/postgresql/data
+      - postgres_data_volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USERNAME}
@@ -62,4 +62,4 @@ services:
       - postgres
       - asterisk
 volumes:
-  data: {}
+  postgres_data_volume: {}
