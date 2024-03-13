@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16.2
+    restart: unless-stopped
+    ports:
+      - '${DB_PORT:-5432}:${DB_INTERNAL_PORT:-5432}'
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_DB=${DB_NAME}
+  callout:
+    image: sptmru/asterisk-callout:latest
+    restart: unless-stopped
+    ports:
+      - '${HTTP_PORT:-8080}:${HTTP_PORT:-8080}'
+    depends_on:
+      - postgres
+volumes:
+  data: {}
